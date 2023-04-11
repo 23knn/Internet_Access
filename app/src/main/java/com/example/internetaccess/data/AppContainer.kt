@@ -1,7 +1,10 @@
 package com.example.internetaccess.data
 
 import com.example.internetaccess.network.UserService
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.Retrofit
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 
 interface AppContainer {
     /** this is used to bring everything together instead of doing it in other places e.g the view model.
@@ -13,8 +16,9 @@ interface AppContainer {
 
 class DefaultAppContainer: AppContainer{
     // make retrofit
-    private val baseUrl = "https://randomuser.me/api"
+    private val baseUrl = "https://randomuser.me/api/"
     private val retrofit = Retrofit.Builder()
+        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl)
         .build()
 
@@ -24,5 +28,5 @@ class DefaultAppContainer: AppContainer{
     // lazy means that it will not be made until it is needed. for that to be possible, the lambda must be provided
 
     //inject the service into an instance of the repository and assign it to the variable for it
-    override val randomUserRepository: UserRepository = UserNetworkRepository(retrofitService)
+    override val randomUserRepository: UserRepository by lazy {UserNetworkRepository(retrofitService)}
 }

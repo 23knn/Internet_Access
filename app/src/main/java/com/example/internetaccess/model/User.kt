@@ -1,18 +1,21 @@
 package com.example.internetaccess.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Users(
     val info: Info,
-    val results: List<User>
+    val results: List<Result>
 )
-
+@Serializable
 data class Info(
     val page: Int,
     val results: Int,
     val seed: String,
     val version: String
 )
-
-data class User(
+@Serializable
+data class Result(
     val cell: String,
     val dob: Dob,
     val email: String,
@@ -26,17 +29,17 @@ data class User(
     val picture: Picture,
     val registered: Registered
 )
-
+@Serializable
 data class Dob(
     val age: Int,
     val date: String
 )
-
+@Serializable
 data class Id(
     val name: String,
     val value: String
 )
-
+@Serializable
 data class Location(
     val city: String,
     val coordinates: Coordinates,
@@ -46,7 +49,7 @@ data class Location(
     val street: Street,
     val timezone: Timezone
 )
-
+@Serializable
 data class Login(
     val md5: String,
     val password: String,
@@ -56,34 +59,34 @@ data class Login(
     val username: String,
     val uuid: String
 )
-
+@Serializable
 data class Name(
     val first: String,
     val last: String,
     val title: String
 )
-
+@Serializable
 data class Picture(
     val large: String,
     val medium: String,
     val thumbnail: String
 )
-
+@Serializable
 data class Registered(
     val age: Int,
     val date: String
 )
-
+@Serializable
 data class Coordinates(
     val latitude: String,
     val longitude: String
 )
-
+@Serializable
 data class Street(
     val name: String,
     val number: Int
 )
-
+@Serializable
 data class Timezone(
     val description: String,
     val offset: String

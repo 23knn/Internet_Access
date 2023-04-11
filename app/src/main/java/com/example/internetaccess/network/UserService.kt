@@ -4,6 +4,6 @@ import com.example.internetaccess.model.Users
 import retrofit2.http.GET
 
 interface UserService {
-    @GET
+    @GET(".")
     suspend fun getUsers(): Users
 }

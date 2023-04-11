@@ -13,6 +13,8 @@ import com.example.internetaccess.UsersApplication
 import com.example.internetaccess.data.UserRepository
 import com.example.internetaccess.model.Users
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 /**
  * great design pattern for this interface. the members of the interface are of the same type as
@@ -36,7 +38,9 @@ class UsersVM(private val randomUserRepository: UserRepository) : ViewModel() {
             usersUiState = UsersUiState.Loading
             usersUiState = try{
                 UsersUiState.Success(randomUserRepository.getUsers())
-            }catch(e: java.lang.Exception){
+            }catch (e: IOException) {
+                UsersUiState.Error
+            } catch (e: HttpException) {
                 UsersUiState.Error
             }
 
@@ -47,8 +51,8 @@ class UsersVM(private val randomUserRepository: UserRepository) : ViewModel() {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as UsersApplication)
-                val usersRepository = application.container.randomUserRepository
-                UsersVM(randomUserRepository = usersRepository)
+                val randomUserRepository = application.container.randomUserRepository
+                UsersVM(randomUserRepository = randomUserRepository)
             }
         }
     }
