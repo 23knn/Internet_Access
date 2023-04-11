@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.internetaccess.ui.theme.InternetAccessTheme
 import com.example.internetaccess.ui.viewModel.UsersVM
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.internetaccess.ui.screens.Home
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val usersViewModel: UsersVM = viewModel()
+                    Home(uiState = usersViewModel.usersUiState,
+                        retry = usersViewModel::getUsers)
                 }
             }
         }
