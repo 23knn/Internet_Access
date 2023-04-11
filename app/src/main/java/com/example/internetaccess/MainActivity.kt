@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val usersViewModel: UsersVM = viewModel()
+                    val usersViewModel: UsersVM = viewModel(factory = UsersVM.Factory)
                     Home(uiState = usersViewModel.usersUiState,
                         retry = usersViewModel::getUsers)
                 }

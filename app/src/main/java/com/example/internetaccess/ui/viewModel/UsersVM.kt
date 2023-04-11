@@ -4,7 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.internetaccess.UsersApplication
 import com.example.internetaccess.data.UserRepository
 import com.example.internetaccess.model.Users
 import kotlinx.coroutines.launch
@@ -35,6 +40,16 @@ class UsersVM(private val randomUserRepository: UserRepository) : ViewModel() {
                 UsersUiState.Error
             }
 
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as UsersApplication)
+                val usersRepository = application.container.randomUserRepository
+                UsersVM(randomUserRepository = usersRepository)
+            }
         }
     }
 }
